@@ -1,0 +1,33 @@
+﻿@model List<u21447234_HW05.ViewModels.BorrowVM>
+@using u21447234_HW05.ViewModels
+
+<h2> fdfsfdfsdfadfsName </h2>
+
+<h4 style="float:left; font-weight:bolder"># Borrows - </h4>
+
+@using (Html.BeginForm("Students", "Home", FormMethod.Post))
+{
+    <input type="submit" style="float:right; background-color:Highlight; color:white; height:35px; border:none; border-radius:5px" value="View Students" />
+}
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Taken Date</th>
+        <th>Brought Date</th>
+        <th>Borrowed By</th>
+    </tr>
+
+    @foreach (BorrowVM bookModel in Model)
+    {
+        <tr>
+            <td>@bookModel.ID</td>
+            <td>@bookModel.TAKEN_DATE</td>
+            <td>@bookModel.BROUGHT_DATE</td>
+            <td>@bookModel.BORROWED_BY</td>
+        </tr>
+    }
+</table>
+
+
+

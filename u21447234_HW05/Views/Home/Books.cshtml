@@ -1,0 +1,135 @@
+﻿@model List<u21447234_HW05.ViewModels.BookVM>
+@using u21447234_HW05.ViewModels
+
+<style>
+    .txtInput {
+        border-radius: 5px;
+        height: 35px;
+        width: 280px;
+    }
+
+    .selcInput {
+        border-radius: 5px;
+        background-color: white;
+        height: 35px;
+        width: 170px;
+        margin-left: 41px;
+    }
+
+    .btnInput {
+        border: none;
+        border-radius: 5px;
+        color: white;
+        height: 35px;
+        width: 170px;
+        margin-left: 41px;
+    }
+
+    .btnView {
+        border: none;
+        border-radius: 5px;
+        color: white;
+        width: 50px;
+    }
+
+    th, td {
+        text-align: center;
+    }
+</style>
+
+<h2 style="margin-bottom: -10px">Books</h2>
+<hr style="margin-bottom: 15px" />
+
+<form method="post">
+    @using (Html.BeginForm("SearchBooks", "Home", FormMethod.Post))
+    {
+        <div style="margin-bottom: 15px; float: left">
+            <input type="text" name="txtBookName" placeholder="Search Book Name" class="txtInput"/>
+
+            <select name="selectType" class="selcInput">
+                <option hidden selected value="selc">Select a Type</option>
+                @{
+                        List<string> types = new List<string>();
+
+                    foreach (BookVM bookModel in Model)
+                    {
+                        string type = bookModel.TYPE;
+                        if (types.Contains(type))
+                        {
+
+                        }
+                        else
+                        {
+                            types.Add(type);
+                        }
+                    }
+                    types.Sort();
+
+                    foreach (string type in types)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                }
+            </select>
+
+            <select name="selectAuthor" class="selcInput">
+                <option hidden selected value="selc">Select an Author</option>
+                @{
+                    List<string> authors = new List<string>();
+
+                    foreach (BookVM bookModel in Model)
+                    {
+                        string author = bookModel.AUTHOR;
+                        if (authors.Contains(author))
+                        {
+
+                        }
+                        else
+                        {
+                            authors.Add(author);
+                        }
+                    }
+                    authors.Sort();
+
+                    foreach (string author in authors)
+                    {
+                        <option value="@author">@author</option>
+                    }
+                }
+            </select>
+
+            <input type="submit" name="btnSearch" value="Search" class="btnInput btn-success"/>
+
+            <input type="button" name="btnClear" value="Clear" class="btnInput btn-danger"/>
+        </div>
+    }
+</form>
+
+@using (Html.BeginForm("Borrows", "Home", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Type</th>
+            <th>Page Count</th>
+            <th>Points</th>
+            <th>Status</th>
+            <th> </th>
+        </tr>
+        @foreach (BookVM bookModel in Model)
+        {
+            <tr>
+                <td>@bookModel.ID</td>
+                <td>@bookModel.NAME</td>
+                <td>@bookModel.AUTHOR</td>
+                <td>@bookModel.TYPE</td>
+                <td>@bookModel.PAGE_COUNT</td>
+                <td>@bookModel.POINTS</td>
+                <td>OUT</td>
+                <td><input type="submit" value="View" class="btn-primary btnView" /></td>
+            </tr>
+        }
+    </table>
+}

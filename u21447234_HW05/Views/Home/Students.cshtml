@@ -1,0 +1,105 @@
+﻿@model List<u21447234_HW05.ViewModels.StudentVM>
+@using u21447234_HW05.ViewModels
+
+<style>
+    .txtInput {
+        border-radius: 5px;
+        height: 35px;
+        width: 280px;
+    }
+
+    .selcInput {
+        border-radius: 5px;
+        background-color: white;
+        height: 35px;
+        width: 225px;
+        margin-left: 58px;
+    }
+
+    .btnInput {
+        border: none;
+        border-radius: 5px;
+        color: white;
+        height: 35px;
+        width: 224px;
+        margin-left: 58px;
+    }
+
+    .btnBorrow {
+        border: none;
+        border-radius: 5px;
+        color: white;
+        width: 100px;
+    }
+
+    th, td {
+        text-align: center;
+    }
+</style>
+
+<h2 style="margin-bottom: -10px">Students</h2>
+<hr style="margin-bottom: 15px" />
+
+<form method="post" name="btnSearchStudents">
+    @using (Html.BeginForm("SearchStudents", "Home", FormMethod.Post))
+    {
+        <div style="margin-bottom: 15px; float: left">
+            <input type="text" name="txtBookName" placeholder="Search Student Name" class="txtInput" />
+
+            <select name="selectClass" class="selcInput">
+                <option hidden selected value="selc">Select a Class</option>
+                @{
+                    List<string> CLASS = new List<string>();
+
+                    foreach (StudentVM studentModel in Model)
+                    {
+                        string sClass = studentModel.CLASS;
+                        if (CLASS.Contains(sClass))
+                        {
+
+                        }
+                        else
+                        {
+                            CLASS.Add(sClass);
+                        }
+                    }
+                    CLASS.Sort();
+
+                    foreach (string sClass in CLASS)
+                    {
+                        <option value="@sClass">@sClass</option>
+                    }
+                }
+            </select>
+
+            <input type="submit" name="btnSearch" value="Search" class="btnInput btn-success" />
+
+            <input type="submit" name="btnClear" value="Clear" class="btnInput btn-danger" />
+        </div>
+    }
+</form>
+
+@using (Html.BeginForm("Borrows", "Home", FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Class</th>
+            <th>Points</th>
+            <th>  </th>
+        </tr>
+        @foreach (StudentVM studentModel in Model)
+        {
+            <tr>
+                <td>@studentModel.ID</td>
+                <td>@studentModel.NAME</td>
+                <td>@studentModel.SURNAME</td>
+                <td>@studentModel.CLASS</td>
+                <td>@studentModel.POINTS</td>
+                <td><input type="submit" value="Borrow Book" class="btn-primary btnBorrow" /></td>
+            </tr>
+        }
+    </table>
+}
